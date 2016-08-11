@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-12</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_TowerParent</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,12 +26,21 @@
           <argument>
             <kind>1</kind>
             <string>///declare variable values
+name = "Tower2";
 enemyDir = 0;
 range = 128;
 canShoot = true;
 reloadSpeed = 125;
 ex = 0; // nearest enemy x
 ey = 0; // nearest enemy y
+towerSelected = false;
+
+global.Currency -= global.Tower2Cost;
+global.IslandSelected = false
+
+currentRangeLevel = 1;
+slowLengthRank = 1;
+currentSpeedLevel = 1;
 </string>
           </argument>
         </arguments>
@@ -93,11 +102,110 @@ if(instance_exists(obj_EnemyParent))
         image_angle = point_direction(x,y,ex,ey);
         if(canShoot)
         {
-            instance_create(x + lengthdir_x(ex/5, image_angle), y + lengthdir_y(ey/5, image_angle), obj_SlowDebuff);
-            canShoot = false;
-            alarm[1] = reloadSpeed;
+            
+            
+            if(slowLengthRank == 1)
+            {
+                slowDeb = instance_create(x + lengthdir_x(ex/5, image_angle), y + lengthdir_y(ey/5, image_angle), obj_SlowDebuff);
+                canShoot = false;
+                alarm[1] = reloadSpeed;
+                
+                slowDeb.slowLength = 1;
+            }
+            
+            if(slowLengthRank == 2)
+            {
+                slowDeb = instance_create(x + lengthdir_x(ex/5, image_angle), y + lengthdir_y(ey/5, image_angle), obj_SlowDebuff);
+                canShoot = false;
+                alarm[1] = reloadSpeed;
+            
+                slowDeb.slowLength = 2;
+            }
+              if(slowLengthRank == 3)
+            {
+                slowDeb = instance_create(x + lengthdir_x(ex/5, image_angle), y + lengthdir_y(ey/5, image_angle), obj_SlowDebuff);
+                canShoot = false;
+                alarm[1] = reloadSpeed;
+            
+                slowDeb.slowLength = 3;
+            }
+            
+                if(slowLengthRank == 4)
+            {
+                slowDeb = instance_create(x + lengthdir_x(ex/5, image_angle), y + lengthdir_y(ey/5, image_angle), obj_SlowDebuff);
+                canShoot = false;
+                alarm[1] = reloadSpeed;
+                slowDeb.slowLength = 4;
+            }
+            
+            
         }
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!instance_exists(obj_TowerMenu) &amp;&amp; global.TowerSelected == false){
+    global.TowerSelected = true;
+    towerSelected = true;
+    scr_createUpgradeButtons(x,y,self);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+if(towerSelected == true){
+    draw_set_colour(c_black);
+    draw_set_font(fnt_Stats);
+    draw_set_alpha(.5);
+    draw_ellipse(x-range,y-range,x+range,y+range,false);
+    draw_set_alpha(1);
+    
+    draw_text(20,340,"Range: " + string(range/10));
+    draw_text(20,358,"Reload: " + string(reloadSpeed/30));
+    
+    if(currentSpeedLevel &lt; 4) draw_text(190,310,"$" + string(global.UpgradeCost*currentSpeedLevel));
+    //if(currentDamageLevel &lt; 4) draw_text(340,310,"$" + string(global.UpgradeCost*currentDamageLevel));
+    if(slowLengthRank &lt; 4) draw_text(340,310,"$" + string(global.UpgradeCost*slowLengthRank));
+    if(currentRangeLevel &lt; 4) draw_text(490,310,"$" + string(global.UpgradeCost*currentRangeLevel));
 }
 </string>
           </argument>

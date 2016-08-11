@@ -27,6 +27,30 @@
             <kind>1</kind>
             <string>global.IslandX = 0;
 global.IslandY = 0;
+
+global.CurrentTowerId = 0;
+global.TowerSelected = false;
+global.IslandSelected = false;
+
+global.Currency = 0;
+
+//*****Upgrades*****
+global.SpeedUpgrade = .5;
+global.DamageUpgrade = 2;
+global.RangeUpgrade = 1.15;
+global.UpgradeCost = 100;
+
+//*****Tower1*****
+global.Tower1Cost = 100;
+
+//*****Tower2*****
+global.Tower2Cost = 100;
+
+//*****Tower3*****
+global.Tower3Cost = 100;
+
+//*****Tower4*****
+global.Tower4Cost = 100;
 </string>
           </argument>
         </arguments>

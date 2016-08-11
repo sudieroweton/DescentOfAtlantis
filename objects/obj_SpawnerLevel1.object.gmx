@@ -33,8 +33,8 @@ waveCooldownInit = 300;//waveCooldown will reset to this value after wave comple
 waveCooldown = 300;//time between each wave
 
 //*******testing lines below. can set currentWave for testing specific waves
-currentWave = 1;
-waveCooldown = 10;
+//currentWave = 1;
+//waveCooldown = 10;
 //*******testing lines above
 
 //Wave 1
@@ -361,7 +361,7 @@ if(waveCooldown == 0 &amp;&amp; currentWave == 7){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font(fnt_Score);
+            <string>draw_set_font(fnt_Stats);
 draw_text(20,20,"Wave: " + string(currentWave) + "/" + string(totalWaves));
 </string>
           </argument>

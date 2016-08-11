@@ -3,11 +3,186 @@
   <spriteName>spr_Tower3</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-12</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_TowerParent</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>name = "Tower3";
+range = 300;
+enemyDir = 0;
+canShoot = true;
+reloadSpeed = 30;
+ex = 0; // nearest enemy x
+ey = 0; // nearest enemy y
+damage = 100;
+
+global.Currency -= global.Tower3Cost;
+towerSelected = false;
+global.IslandSelected = false
+
+//upgrading
+currentSpeedLevel = 1;
+currentRangeLevel = 1;
+currentDamageLevel = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>canShoot = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (instance_exists(obj_EnemyParent)){
+ex = instance_nearest(x,y,obj_EnemyParent).x;
+    ey = instance_nearest(x,y,obj_EnemyParent).y;
+    var bullet;
+    enemyDir = point_distance(x, y, ex, ey);
+    
+    if(enemyDir &lt;= range)
+    {
+        image_angle = point_direction(x,y,ex,ey);
+
+        if(canShoot){
+            bullet = instance_create(x, y, obj_Missile);
+            bullet.direction = image_angle;
+            bullet.image_angle = image_angle;
+            bullet.speed = 20;
+            canShoot = false;
+            alarm[1] = reloadSpeed;
+        }
+    }
+    
+//    if (collision_point(x, y, obj_EnemyParent, true, true)){
+//        effect_create_above(ef_ellipse, x, y, 10, c_aqua);
+//    }
+
+}//end exist
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!instance_exists(obj_TowerMenu) &amp;&amp; global.TowerSelected == false){
+    global.TowerSelected = true;
+    towerSelected = true;
+    scr_createUpgradeButtons(x,y,self);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+if(towerSelected == true){
+    draw_set_colour(c_black);
+    draw_set_font(fnt_Stats);
+    draw_set_alpha(.5);
+    draw_ellipse(x-range,y-range,x+range,y+range,false);
+    draw_set_alpha(1);
+    
+    draw_text(20,322,"Damage: " + string(damage));
+    draw_text(20,340,"Range: " + string(range/10));
+    draw_text(20,358,"Reload: " + string(reloadSpeed/30));
+    
+    draw_text(190,310,"$" + string(global.UpgradeCost*currentSpeedLevel));
+    draw_text(340,310,"$" + string(global.UpgradeCost*currentDamageLevel));
+    draw_text(490,310,"$" + string(global.UpgradeCost*currentRangeLevel));
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>

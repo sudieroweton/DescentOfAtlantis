@@ -8,6 +8,31 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(global.Currency &lt; global.Tower1Cost){
+    image_alpha = .5;
+}else image_alpha = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="6" enumb="7">
       <action>
         <libid>1</libid>
@@ -25,15 +50,45 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(global.IslandX,global.IslandY,obj_Tower1);
+            <string>if(global.Currency &gt;= global.Tower1Cost){
+    instance_create(global.IslandX,global.IslandY,obj_Tower1);
 
-with(obj_Tower1Select) instance_destroy();
-with(obj_Tower2Select) instance_destroy();
-with(obj_Tower3Select) instance_destroy();
-with(obj_Tower4Select) instance_destroy();
+    with(obj_Tower1Select) instance_destroy();
+    with(obj_Tower2Select) instance_destroy();
+    with(obj_Tower3Select) instance_destroy();
+    with(obj_Tower4Select) instance_destroy();
 
-with(obj_TowerMenu) instance_destroy();
-with(obj_CloseTowerMenu) instance_destroy();
+    with(obj_TowerMenu) instance_destroy();
+    with(obj_CloseTowerMenu) instance_destroy();
+
+    var island = instance_position(global.IslandX,global.IslandY,obj_Island);
+    island.isTaken = true;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+draw_set_font(fnt_Stats);
+draw_text(25,310,"$" + string(global.Tower1Cost));
 </string>
           </argument>
         </arguments>
